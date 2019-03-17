@@ -1,5 +1,6 @@
 <?php
 
+use App\Entry;
 use App\User;
 use Illuminate\Database\Seeder;
 
@@ -26,5 +27,8 @@ class DatabaseSeeder extends Seeder
         } else {
             Log::info('Created admin "'.$admin->name.'" <'.$admin->email.'>');
         }
+
+        factory(User::class, 14)->create();
+        factory(Entry::class, 5)->create();
     }
 }

@@ -10,14 +10,14 @@ import Signup from "../pages/auths/Signup";
 import NotFound from "../pages/NotFound";
 import EntryList from "../pages/EntryList";
 import EntryAdd from "../pages/EntryAdd";
+import Entry from "../pages/Entry";
 
 const routes = [
     {
         path: "/",
         name: "home",
         redirect: "/entries",
-        meta: { requiresAuth: false },
-
+        meta: { requiresAuth: false }
     },
     {
         path: "/entries",
@@ -26,10 +26,22 @@ const routes = [
         component: EntryList
     },
     {
+        path: "/entries/:page",
+        name: "entry-list-page",
+        component: EntryList,
+        meta: { requiresAuth: false }
+    },
+    {
         path: "/entry/add",
         name: "entry-add",
         meta: { requiresAuth: true },
-        component:EntryAdd
+        component: EntryAdd
+    },
+    {
+        path: "/entry/:id",
+        name: "entry",
+        component: Entry,
+        meta: { requiresAuth: false }
     },
     {
         path: "/signout",
@@ -41,14 +53,12 @@ const routes = [
         name: "signin",
         meta: { requiresAuth: false },
         component: Signin
-
     },
     {
         path: "/signup",
         name: "signup",
         meta: { requiresAuth: false },
         component: Signup
-
     },
     {
         path: "*",
@@ -63,7 +73,6 @@ const router = new VueRouter({
     hashbang: false,
     mode: "history"
 });
-
 
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
@@ -129,6 +138,5 @@ router.beforeEach((to, from, next) => {
         }
     }
 });
-
 
 export default router;

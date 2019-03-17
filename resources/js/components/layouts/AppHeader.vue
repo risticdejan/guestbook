@@ -7,10 +7,10 @@
     <v-spacer></v-spacer>
     <v-toolbar-items class="hidden-sm-and-down">
       <v-btn flat to="/entries">
-        <v-icon class="hidden-sm-only" left>fa fa-newspaper</v-icon>Entries
+        <v-icon class="hidden-sm-only" left>fa fa-home</v-icon>Home
       </v-btn>
       <v-btn flat to="/entry/add" v-if="isLogged">
-        <v-icon class="hidden-sm-only" left>fa fa-plus-square</v-icon>Add Entry
+        <v-icon class="hidden-sm-only" left>fa fa-plus-square</v-icon>Add Comment
       </v-btn>
       <v-btn flat to="/signin" v-if="!isLogged">
         <v-icon class="hidden-sm-only" left>fa fa-sign-in-alt</v-icon>Sign in

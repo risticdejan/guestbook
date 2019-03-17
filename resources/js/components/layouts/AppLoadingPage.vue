@@ -1,9 +1,9 @@
 <template>
-  <v-container fill-height pa-0>
-    <v-layout row justify-center align-center>
+  <div class="entries-area">
+    <v-layout fill-height justify-center align-center>
       <v-progress-circular indeterminate :size="70" :width="7" color="secondary"></v-progress-circular>
     </v-layout>
-  </v-container>
+  </div>
 </template>
 
 <script>
@@ -13,4 +13,7 @@ export default {
 </script>
 
 <style>
+.entries-area {
+  height: 550px;
+}
 </style>

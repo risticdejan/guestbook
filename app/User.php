@@ -57,4 +57,12 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    /**
+     * Get All entries for user.
+     */
+    public function entries()
+    {
+        return $this->hasMany('App\Entry');
+    }
 }

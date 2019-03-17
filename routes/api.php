@@ -30,6 +30,6 @@ Route::group([
 });
 
 
-Route::apiResource('/comments', 'CommentController');
+Route::apiResource('/entry', 'EntryController');
 
 

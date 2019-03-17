@@ -10,6 +10,10 @@ use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
+use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 
 class Handler extends ExceptionHandler
 {
@@ -55,13 +59,31 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($exception instanceof TokenInvalidException) {
+            return response()->json([
+                'error' =>'Token is Invalid'
+            ], Response::HTTP_BAD_REQUEST);
+        } elseif ($exception instanceof TokenExpiredException) {
+            return response()->json([
+                'error' => 'Token is expired'
+            ], Response::HTTP_BAD_REQUEST);
+        } elseif ($exception instanceof JWTException) {
+            return response()->json([
+                'error' => 'Token is not provided'
+            ], Response::HTTP_BAD_REQUEST);
+        } elseif ($exception instanceof TokenBlacklistedException) {
+            return response()->json([
+                'error' => 'Token can not be used, get new one'
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
         if ($exception instanceof ModelNotFoundException) {
             return response()->json([
                 'error' => "Model not found"
             ], Response::HTTP_BAD_REQUEST);
         }
         if ($exception instanceof NotFoundHttpException) {
-            if(!$request->ajax()) {
+            if (!$request->ajax()) {
                 return redirect('/');
             }
 

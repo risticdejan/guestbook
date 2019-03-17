@@ -12,15 +12,15 @@
     <v-list>
       <v-list-tile to="/entries">
         <v-list-tile-action>
-          <v-icon>fa fa-newspaper</v-icon>
+          <v-icon>fa fa-home</v-icon>
         </v-list-tile-action>
-        <v-list-tile-content>Entries</v-list-tile-content>
+        <v-list-tile-content>Home</v-list-tile-content>
       </v-list-tile>
       <v-list-tile to="/entry/add" v-if="isLogged">
         <v-list-tile-action>
           <v-icon>fa fa-plus-square</v-icon>
         </v-list-tile-action>
-        <v-list-tile-content>Add Entry</v-list-tile-content>
+        <v-list-tile-content>Add Comment</v-list-tile-content>
       </v-list-tile>
       <v-list-tile to="/signin" v-if="!isLogged">
         <v-list-tile-action>
@@ -50,7 +50,7 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "AppSidebar",
-  props: ["drawer"],
+  props: ["drawer"], 
   computed: {
     ...mapGetters({
       isLogged: "auth/isLogged"

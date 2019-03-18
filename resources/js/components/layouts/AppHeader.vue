@@ -9,16 +9,16 @@
       <v-btn flat to="/entries">
         <v-icon class="hidden-sm-only" left>fa fa-home</v-icon>Home
       </v-btn>
-      <v-btn flat to="/entry/add" v-if="isLogged">
+      <v-btn flat to="/entry/add" v-if="isEmailVerified">
         <v-icon class="hidden-sm-only" left>fa fa-plus-square</v-icon>Add Comment
       </v-btn>
-      <v-btn flat to="/signin" v-if="!isLogged">
+      <v-btn flat to="/signin" v-if="!isEmailVerified">
         <v-icon class="hidden-sm-only" left>fa fa-sign-in-alt</v-icon>Sign in
       </v-btn>
-      <v-btn flat to="/signup" v-if="!isLogged">
+      <v-btn flat to="/signup" v-if="!isEmailVerified">
         <v-icon class="hidden-sm-only" left>fa fa-user-plus</v-icon>Sign up
       </v-btn>
-      <v-btn flat to="/signout" v-if="isLogged">
+      <v-btn flat to="/signout" v-if="isEmailVerified">
         <v-icon class="hidden-sm-only" left>fa fa-sign-out-alt</v-icon>Sign out
       </v-btn>
     </v-toolbar-items>
@@ -31,7 +31,10 @@ import { mapGetters } from "vuex";
 export default {
   name: "AppHeader",
   computed: {
-    ...mapGetters({ isLogged: "auth/isLogged" })
+    ...mapGetters({
+      isLogged: "auth/isLogged",
+      isEmailVerified: "auth/isEmailVerified"
+    })
   },
   methods: {
     toggleSidebar() {

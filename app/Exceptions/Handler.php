@@ -77,11 +77,15 @@ class Handler extends ExceptionHandler
             ], Response::HTTP_BAD_REQUEST);
         }
 
+       
+        
         if ($exception instanceof ModelNotFoundException) {
             return response()->json([
                 'error' => "Model not found"
             ], Response::HTTP_BAD_REQUEST);
         }
+
+       
         if ($exception instanceof NotFoundHttpException) {
             if (!$request->ajax()) {
                 return redirect('/');
@@ -90,6 +94,10 @@ class Handler extends ExceptionHandler
             return response()->json([
                 'error' => "Page not found"
             ], Response::HTTP_BAD_REQUEST);
+        }
+
+        if ($exception instanceof HttpException) {
+            return redirect('entries');
         }
 
         return parent::render($request, $exception);

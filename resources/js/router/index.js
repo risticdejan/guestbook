@@ -7,6 +7,7 @@ Vue.use(VueRouter);
 
 import Signin from "../pages/auths/Signin";
 import Signup from "../pages/auths/Signup";
+import EmailVerification from "../pages/auths/EmailVerification";
 import NotFound from "../pages/NotFound";
 import EntryList from "../pages/EntryList";
 import EntryAdd from "../pages/EntryAdd";
@@ -66,6 +67,12 @@ const routes = [
         name: "signup",
         meta: { requiresAuth: false },
         component: Signup
+    },
+    {
+        path: "/email/verification",
+        name: "email-verification",
+        meta: { requiresAuth: true },
+        component: EmailVerification
     },
     {
         path: "*",

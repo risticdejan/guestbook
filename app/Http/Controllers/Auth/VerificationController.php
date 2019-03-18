@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\User;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
+use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Auth\VerifiesEmails;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 class VerificationController extends Controller
 {
@@ -25,7 +30,64 @@ class VerificationController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/entries';
+
+
+    /**
+     * Show the email verification notice.
+     *
+     */
+    public function show()
+    {
+        //
+    }
+
+    /**
+     * Mark the authenticated user's email address as verified.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function verify($id, Request $request)
+    {
+        try {
+            $user = User::findOrFail($id);
+        } catch (\Exception $e) {
+            return redirect($this->redirectPath());
+        }
+
+        if (!$user->hasVerifiedEmail()) {
+            if ($user instanceof MustVerifyEmail && $user->markEmailAsVerified()) {
+                event(new Verified($user));
+            }
+        }
+
+        return redirect($this->redirectPath());
+    }
+
+    /**
+     * Resend the email verification notification.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function resend(Request $request)
+    {
+        $user = $request->user();
+
+        if ($user->hasVerifiedEmail()) {
+            return response()->json([
+                "user" => $user
+            ], Response::HTTP_OK);
+        }
+
+        $user->sendEmailVerificationNotification();
+
+        return response()->json([
+            "user" => $user
+        ], Response::HTTP_OK);
+    }
+
 
     /**
      * Create a new controller instance.
@@ -34,7 +96,6 @@ class VerificationController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
         $this->middleware('signed')->only('verify');
         $this->middleware('throttle:6,1')->only('verify', 'resend');
     }

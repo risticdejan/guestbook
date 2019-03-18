@@ -19,6 +19,7 @@ class EntryController extends Controller
     public function __construct()
     {
         $this->middleware('jwt', ['except' => ['index','show']]);
+        $this->middleware('verified', ['except' => ['index','show']]);
     }
 
     /**
@@ -122,7 +123,6 @@ class EntryController extends Controller
      */
     public function update(Request $request, Entry $entry)
     {
-
         if (Gate::denies('update-entry', $entry)) {
             return response()->json([
                 'error' => "You are not authorized"

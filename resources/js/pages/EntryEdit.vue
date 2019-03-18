@@ -8,7 +8,7 @@
 
     <!-- Error Alert -->
     <v-layout v-if="error" row wrap>
-      <v-flex xs12 md6 offset-md3 lg4 offset-lg4>
+      <v-flex xs12 md6 offset-md3>
         <form-alert :messages="error"></form-alert>
       </v-flex>
     </v-layout>

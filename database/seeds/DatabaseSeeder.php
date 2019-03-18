@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
             Log::info('Created admin "'.$admin->name.'" <'.$admin->email.'>');
         }
 
-        factory(User::class, 14)->create();
-        factory(Entry::class, 115)->create();
+        factory(User::class, 4)->create();
+        factory(Entry::class, 5)->create();
     }
 }

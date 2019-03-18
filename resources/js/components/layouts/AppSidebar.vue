@@ -22,25 +22,25 @@
         </v-list-tile-action>
         <v-list-tile-content>Home</v-list-tile-content>
       </v-list-tile>
-      <v-list-tile to="/entry/add" v-if="isLogged">
+      <v-list-tile to="/entry/add" v-if="isEmailVerified">
         <v-list-tile-action>
           <v-icon>fa fa-plus-square</v-icon>
         </v-list-tile-action>
         <v-list-tile-content>Add Comment</v-list-tile-content>
       </v-list-tile>
-      <v-list-tile to="/signin" v-if="!isLogged">
+      <v-list-tile to="/signin" v-if="!isEmailVerified">
         <v-list-tile-action>
           <v-icon>fa fa-sign-in-alt</v-icon>
         </v-list-tile-action>
         <v-list-tile-content>Sign in</v-list-tile-content>
       </v-list-tile>
-      <v-list-tile to="/signup" v-if="!isLogged">
+      <v-list-tile to="/signup" v-if="!isEmailVerified">
         <v-list-tile-action>
           <v-icon>fa fa-user-plus</v-icon>
         </v-list-tile-action>
         <v-list-tile-content>Sing up</v-list-tile-content>
       </v-list-tile>
-      <v-list-tile to="/signout" v-if="isLogged">
+      <v-list-tile to="/signout" v-if="isEmailVerified">
         <v-list-tile-action>
           <v-icon>fa fa-sign-out-alt</v-icon>
         </v-list-tile-action>
@@ -59,6 +59,7 @@ export default {
   computed: {
     ...mapGetters({
       isLogged: "auth/isLogged",
+      isEmailVerified: "auth/isEmailVerified",
       user: "auth/authUser"
     }),
     ndrawer: {

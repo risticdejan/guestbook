@@ -11,6 +11,19 @@
 |
 */
 
+Route::get("email/resend", [
+    'uses' => "Auth\VerificationController@resend",
+    'as' => 'verification.resend'
+]);
+// Route::get("email/verify", [
+//     'uses' => "Auth\VerificationController@show",
+//     'as' => 'verification.notice'
+// ]);
+Route::get("email/verify/{id}", [
+    'uses' => "Auth\VerificationController@verify",
+    'as' => 'verification.verify'
+]);
+
 Route::view('/', 'home');
 Route::view('/{params}', 'home');
 Route::view('/{params}/{params2}', 'home');

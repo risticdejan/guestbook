@@ -3,6 +3,7 @@ import router from "../../router";
 const state = {
     authUser: null,
     isLogged: false,
+    isEmailVerified: false,
     token: null,
     error: null
 };
@@ -62,7 +63,11 @@ const actions = {
 
                     localStorage.setItem("token", token);
 
-                    router.push("/");
+                    if (user.email_verified_at) {
+                        router.push("/");
+                    } else {
+                        router.push("/email/verification");
+                    }
 
                     resolve(res);
                 })
@@ -86,6 +91,8 @@ const actions = {
             axios
                 .post(url, payload, config)
                 .then(res => {
+                    resolve(res);
+
                     const user = res.data.user;
                     const token = res.data.token;
 
@@ -94,7 +101,11 @@ const actions = {
 
                     localStorage.setItem("token", token);
 
-                    router.push("/");
+                    if (user.email_verified_at) {
+                        router.push("/");
+                    } else {
+                        router.push("/email/verification");
+                    }
 
                     resolve(res);
                 })
@@ -152,6 +163,37 @@ const actions = {
                     commit("setAuthUser", user);
                     commit("setToken", token);
 
+                    if (!user.email_verified_at) {
+                        router.push("/email/verification");
+                    }
+
+                    resolve(res);
+                })
+                .catch(err => {
+                    commit("clearAuthUser");
+                    commit("clearToken");
+
+                    reject(err);
+                });
+        });
+    },
+
+    verificationResend: ({ commit }, payload) => {
+        const token = localStorage.getItem("token");
+        const url = base_url + "/email/resend";
+        let config = {
+            headers: {
+                Accept: "application/json",
+                Authorization: "Bearer " + token
+            }
+        };
+        return new Promise((resolve, reject) => {
+            axios
+                .get(url, config)
+                .then(res => {
+                    commit("setAuthUser", user);
+                    commit("setToken", token);
+
                     resolve(res);
                 })
                 .catch(err => {
@@ -168,7 +210,9 @@ const getters = {
     authUser: state => state.authUser,
     token: state => state.token,
     error: state => state.error,
-    isLogged: state => (state.authUser ? true : false)
+    isLogged: state => (state.authUser ? true : false),
+    isEmailVerified: state =>
+        state.authUser && state.authUser.email_verified_at ? true : false
 };
 
 export default {

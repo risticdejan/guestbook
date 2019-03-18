@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Auth\Events\Registered;
 use App\User;
 
 class AuthController extends Controller
@@ -84,8 +85,10 @@ class AuthController extends Controller
 
         $token = auth()->attempt(['email' => $data['email'], 'password' => $data['password']]);
 
+        event(new Registered($user));
+
         return response()->json([
-            'user' => $user,
+            'user' => User::findOrFail($user->id),
             'token' => $token
         ], Response::HTTP_OK);
     }

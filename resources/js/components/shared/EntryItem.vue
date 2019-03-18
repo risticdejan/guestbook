@@ -45,9 +45,7 @@ export default {
             this.$emit("deleteEntry");
           }
         })
-        .catch(err => {
-          // console.log(err);
-        });
+        .catch(err => {});
     },
     editEntry() {
       this.$router.push({ name: "entry-edit", params: { id: this.entry.id } });

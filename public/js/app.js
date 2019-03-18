@@ -2098,8 +2098,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         if (res.status) {
           _this.$emit("deleteEntry");
         }
-      }).catch(function (err) {// console.log(err);
-      });
+      }).catch(function (err) {});
     },
     editEntry: function editEntry() {
       this.$router.push({
@@ -2157,12 +2156,118 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "Entry"
+  name: "Entry",
+  data: function data() {
+    return {
+      entry: null
+    };
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
+    isLogged: "auth/isLogged",
+    entry: "entry/entry",
+    token: "auth/token",
+    cpage: "entry/current_page",
+    user: "auth/authUser"
+  })),
+  watch: {
+    $route: "fetchData"
+  },
+  created: function created() {
+    this.fetchData();
+  },
+  methods: {
+    backToEntries: function backToEntries() {
+      this.$router.push({
+        name: "entry-list-page",
+        params: {
+          page: this.cpage
+        }
+      });
+    },
+    fetchData: function fetchData() {
+      var _this = this;
+
+      this.id = parseInt(this.$route.params.id);
+      this.$store.dispatch("entry/getEntry", this.id).then(function (res) {
+        _this.entry = res.data.entry;
+      }).catch(function (err) {});
+    },
+    deleteEntry: function deleteEntry() {
+      var _this2 = this;
+
+      this.$store.dispatch("entry/delete", {
+        id: this.entry.id,
+        token: this.token
+      }).then(function (res) {
+        if (res.status) {
+          _this2.$router.push({
+            name: "entry-list-page",
+            params: {
+              page: _this2.cpage
+            }
+          });
+        }
+      }).catch(function (err) {});
+    },
+    editEntry: function editEntry() {
+      this.$router.push({
+        name: "entry-edit",
+        params: {
+          id: this.entry.id
+        }
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -29144,7 +29249,129 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("h1", [_vm._v("Entry")])
+  return _c(
+    "v-container",
+    { attrs: { fluid: "" } },
+    [
+      _c(
+        "v-layout",
+        { attrs: { row: "", wrap: "" } },
+        [
+          _c(
+            "v-flex",
+            { attrs: { xs12: "", md6: "", "offset-md3": "" } },
+            [
+              _c(
+                "v-card",
+                { staticClass: "mb-2" },
+                [
+                  _c("v-card-text", [
+                    _vm.entry
+                      ? _c("div", [
+                          _c("h1", [
+                            _c("b", [_vm._v("Name:")]),
+                            _vm._v(
+                              "\n              " +
+                                _vm._s(_vm.entry.name) +
+                                "\n            "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _c("b", [_vm._v("Subject:")]),
+                            _vm._v(
+                              "\n              " +
+                                _vm._s(_vm.entry.subject) +
+                                "\n            "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _vm.entry.email
+                            ? _c("p", [
+                                _c("b", [_vm._v("Email:")]),
+                                _vm._v(
+                                  "\n              " +
+                                    _vm._s(_vm.entry.email) +
+                                    "\n            "
+                                )
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _c("p", [
+                            _c("b", [_vm._v("Comment:")]),
+                            _vm._v(
+                              "\n              " +
+                                _vm._s(_vm.entry.body) +
+                                "\n            "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "p",
+                            [
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: { type: "button", color: "primary" },
+                                  on: { click: _vm.backToEntries }
+                                },
+                                [_vm._v("back")]
+                              ),
+                              _vm._v(" "),
+                              this.user
+                                ? _c("span", [
+                                    this.user.id == _vm.entry.user.id ||
+                                    this.user.role == "admin"
+                                      ? _c(
+                                          "span",
+                                          [
+                                            _c(
+                                              "v-btn",
+                                              {
+                                                attrs: {
+                                                  type: "button",
+                                                  color: "success"
+                                                },
+                                                on: { click: _vm.editEntry }
+                                              },
+                                              [_vm._v("edit")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "v-btn",
+                                              {
+                                                attrs: {
+                                                  type: "button",
+                                                  color: "error"
+                                                },
+                                                on: { click: _vm.deleteEntry }
+                                              },
+                                              [_vm._v("delete")]
+                                            )
+                                          ],
+                                          1
+                                        )
+                                      : _vm._e()
+                                  ])
+                                : _vm._e()
+                            ],
+                            1
+                          )
+                        ])
+                      : _c("div", [_c("p", [_vm._v("There are no entry.")])])
+                  ])
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

@@ -100,7 +100,10 @@ export default {
       isFormValid: true,
       email: "",
       emailRules: [
-        email => !email || /.@+./.test(email) || "Email must be valid",
+        email =>
+          !email ||
+          /[\w-]+@([\w-]+\.)+[\w-]+/.test(email) ||
+          "Email must be valid",
         email => email.length < 80 || "Email must be less than 80 characters"
       ],
       name: "",

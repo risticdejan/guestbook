@@ -2281,7 +2281,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       isFormValid: true,
       email: "",
       emailRules: [function (email) {
-        return !email || /.@+./.test(email) || "Email must be valid";
+        return !email || /[\w-]+@([\w-]+\.)+[\w-]+/.test(email) || "Email must be valid";
       }, function (email) {
         return email.length < 80 || "Email must be less than 80 characters";
       }],
@@ -2461,7 +2461,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       isFormValid: true,
       email: "",
       emailRules: [function (email) {
-        return !email || /.@+./.test(email) || "Email must be valid";
+        return !email || /[\w-]+@([\w-]+\.)+[\w-]+/.test(email) || "Email must be valid";
       }, function (email) {
         return email.length < 80 || "Email must be less than 80 characters";
       }],
@@ -2858,7 +2858,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       emailRules: [function (email) {
         return !!email || "Email is required";
       }, function (email) {
-        return /.@+./.test(email) || "Email must be valid";
+        return /[\w-]+@([\w-]+\.)+[\w-]+/.test(email) || "Email must be valid";
       }],
       passwordRules: [function (password) {
         return !!password || "Password is required";
@@ -3017,7 +3017,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       emailRules: [function (email) {
         return !!email || "Email is required";
       }, function (email) {
-        return /.@+./.test(email) || "Email must be valid";
+        return /[\w-]+@([\w-]+\.)+[\w-]+/.test(email) || "Email must be valid";
       }],
       passwordRules: [function (password) {
         return !!password || "Password is required";

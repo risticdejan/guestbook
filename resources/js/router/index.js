@@ -113,9 +113,7 @@ router.beforeEach((to, from, next) => {
         store
             .dispatch("auth/signout")
             .then(res => {
-                next({
-                    path: "/"
-                });
+                next(false);
             })
             .catch(err => {
                 next();

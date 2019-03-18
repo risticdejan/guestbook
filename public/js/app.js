@@ -73646,9 +73646,7 @@ router.beforeEach(function (to, from, next) {
     return record.meta.signoutAuth;
   })) {
     _store__WEBPACK_IMPORTED_MODULE_3__["default"].dispatch("auth/signout").then(function (res) {
-      next({
-        path: "/"
-      });
+      next(false);
     }).catch(function (err) {
       next();
     });

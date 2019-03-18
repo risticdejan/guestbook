@@ -3,14 +3,17 @@
     <v-layout row wrap>
       <v-flex xs12 md6 offset-md3>
         <v-card class="mb-2">
-          <v-card-text class="text-xs-center">
+          <v-card-text>
             <h1 class="mb-2">Guestbook</h1>
-            <app-loading-page v-if="!loading"></app-loading-page>
-
-            <div v-else class="entries-area">
+            <div class="entries-area">
               <div v-if="entries.length > 0">
                 <ul class="entry_list">
-                  <entry-item v-for="entry in entries" :key="entry.id" :entry="entry"></entry-item>
+                  <entry-item
+                    v-for="entry in entries"
+                    :key="entry.id"
+                    :entry="entry"
+                    @deleteEntry="fetchData"
+                  ></entry-item>
                 </ul>
               </div>
               <div v-else>
@@ -43,13 +46,11 @@
 import { mapGetters } from "vuex";
 
 import EntryItem from "../components/shared/EntryItem";
-import AppLoadingPage from "../components/layouts/AppLoadingPage";
 
 export default {
   name: "EntryList",
   components: {
-    EntryItem,
-    AppLoadingPage
+    EntryItem
   },
   data() {
     return {
@@ -99,13 +100,11 @@ export default {
 </script>
 
 <style>
-.entries-area {
-  min-height: 550px;
-}
 .entry_list {
   list-style: none;
   margin: 0;
   padding: 0;
+  overflow: hidden;
 }
 
 .theme--dark.v-pagination .v-pagination__navigation,

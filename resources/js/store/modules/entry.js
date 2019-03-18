@@ -73,8 +73,8 @@ const actions = {
                 });
         });
     },
-    getEntry: ({ commit }, post_id) => {
-        const url = base_url + "api/entry/" + post_id;
+    getEntry: ({ commit }, id) => {
+        const url = base_url + "api/entry/" + id;
         return new Promise((resolve, reject) => {
             axios
                 .get(url)
@@ -104,6 +104,50 @@ const actions = {
                 .then(res => {
                     router.push("/");
 
+                    resolve(res);
+                })
+                .catch(err => {
+                    const error = err.response.data.error;
+                    commit("setError", error);
+
+                    reject(err);
+                });
+        });
+    },
+    delete: ({ commit, state }, payload) => {
+        const url = base_url + "api/entry/" + payload.id;
+        let config = {
+            headers: {
+                Accept: "application/json",
+                Authorization: "Bearer " + payload.token
+            }
+        };
+        return new Promise((resolve, reject) => {
+            axios
+                .delete(url, config)
+                .then(res => {
+                    resolve(res);
+                })
+                .catch(err => {
+                    const error = err.response.data.error;
+                    commit("setError", error);
+
+                    reject(err);
+                });
+        });
+    },
+    update: ({ commit, state }, payload) => {
+        const url = base_url + "api/entry/" + payload.id;
+        let config = {
+            headers: {
+                Accept: "application/json",
+                Authorization: "Bearer " + payload.token
+            }
+        };
+        return new Promise((resolve, reject) => {
+            axios
+                .put(url, payload, config)
+                .then(res => {
                     resolve(res);
                 })
                 .catch(err => {

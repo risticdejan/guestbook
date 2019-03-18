@@ -1,8 +1,8 @@
 <template>
   <v-container fluid>
-    <v-layout row wrap>
+    <v-layout row wrap v-if="entry">
       <v-flex xs12 md6 offset-md3>
-        <h2>Add your Comment</h2>
+        <h2>Edit: {{ entry.subject }}</h2>
       </v-flex>
     </v-layout>
 
@@ -13,7 +13,7 @@
       </v-flex>
     </v-layout>
 
-    <v-layout row wrap>
+    <v-layout row wrap v-if="entry">
       <v-flex xs12 md6 offset-md3>
         <div class="add-new-entry" v-if="isLogged">
           <v-form
@@ -21,7 +21,7 @@
             v-model="isFormValid"
             lazy-validation
             ref="form"
-            @submit.prevent="handleAddNewEntry"
+            @submit.prevent="handleUpdateEntry"
           >
             <v-layout row>
               <v-flex xs12>
@@ -77,8 +77,9 @@
                 >
                   <span slot="loader" class="custom-loader">
                     <v-icon light>fas fa-spinner</v-icon>
-                  </span>add
+                  </span>Update
                 </v-btn>
+                <v-btn block @click="backToEntries" type="button" color="success">back</v-btn>
               </v-flex>
             </v-layout>
           </v-form>
@@ -92,7 +93,7 @@
 import { mapGetters } from "vuex";
 
 export default {
-  name: "EntryAdd",
+  name: "EntryEdit",
   data() {
     return {
       loading: false,
@@ -124,18 +125,28 @@ export default {
   computed: {
     ...mapGetters({
       isLogged: "auth/isLogged",
+      entry: "entry/entry",
       token: "auth/token",
-      error: "entry/error"
+      error: "entry/error",
+      cpage: "entry/current_page"
     })
   },
   destroyed() {
     this.$store.commit("entry/clearError");
+    this.$store.commit("entry/clearEntry");
+  },
+  watch: {
+    $route: "fetchData"
+  },
+  created() {
+    this.fetchData();
   },
   methods: {
-    handleAddNewEntry() {
+    handleUpdateEntry() {
       if (this.$refs.form.validate() && this.loading == false) {
         this.loading = true;
         var data = {
+          id: this.entry.id,
           token: this.token,
           name: this.name,
           subject: this.subject,
@@ -145,14 +156,38 @@ export default {
         if (this.email) data.email = this.email;
 
         this.$store
-          .dispatch("entry/create", data)
+          .dispatch("entry/update", data)
           .then(res => {
+            this.$router.push({
+              name: "entry-list-page",
+              params: { page: this.cpage }
+            });
             this.loading = false;
           })
           .catch(err => {
             this.loading = false;
           });
       }
+    },
+    backToEntries() {
+      this.$router.push({
+        name: "entry-list-page",
+        params: { page: this.cpage }
+      });
+    },
+    fetchData() {
+      this.id = parseInt(this.$route.params.id);
+
+      this.$store
+        .dispatch("entry/getEntry", this.id)
+        .then(res => {
+          var entry = res.data.entry;
+          this.name = entry.name;
+          this.email = entry.email || "";
+          this.subject = entry.subject;
+          this.body = entry.body;
+        })
+        .catch(err => {});
     }
   }
 };

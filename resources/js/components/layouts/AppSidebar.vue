@@ -10,6 +10,12 @@
     <v-divider></v-divider>
 
     <v-list>
+      <v-list-tile v-if="user">
+        <v-list-tile-action>
+          <v-icon>far fa-user</v-icon>
+        </v-list-tile-action>
+        <v-list-tile-content>{{ user.role.toUpperCase() }} : {{ user.name.toUpperCase() }}</v-list-tile-content>
+      </v-list-tile>
       <v-list-tile to="/entries">
         <v-list-tile-action>
           <v-icon>fa fa-home</v-icon>
@@ -41,7 +47,6 @@
         <v-list-tile-content>Sign out</v-list-tile-content>
       </v-list-tile>
     </v-list>
-
   </v-navigation-drawer>
 </template>
 
@@ -50,10 +55,11 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "AppSidebar",
-  props: ["drawer"], 
+  props: ["drawer"],
   computed: {
     ...mapGetters({
-      isLogged: "auth/isLogged"
+      isLogged: "auth/isLogged",
+      user: "auth/authUser"
     }),
     ndrawer: {
       get: function() {

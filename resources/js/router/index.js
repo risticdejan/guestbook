@@ -10,6 +10,7 @@ import Signup from "../pages/auths/Signup";
 import NotFound from "../pages/NotFound";
 import EntryList from "../pages/EntryList";
 import EntryAdd from "../pages/EntryAdd";
+import EntryEdit from "../pages/EntryEdit";
 import Entry from "../pages/Entry";
 
 const routes = [
@@ -36,6 +37,12 @@ const routes = [
         name: "entry-add",
         meta: { requiresAuth: true },
         component: EntryAdd
+    },
+    {
+        path: "/entry/edit/:id",
+        name: "entry-edit",
+        meta: { requiresAuth: true },
+        component: EntryEdit
     },
     {
         path: "/entry/:id",

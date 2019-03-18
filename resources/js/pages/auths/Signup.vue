@@ -3,7 +3,7 @@
     <!-- Signup Title -->
     <v-layout row wrap>
       <v-flex xs12 md6 offset-md3 lg4 offset-lg4>
-        <h2>Get Started Here</h2>
+        <h2>Sign up</h2>
       </v-flex>
     </v-layout>
 

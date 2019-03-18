@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-layout row wrap>
       <v-flex xs12 md6 offset-md3 lg4 offset-lg4>
-        <h2>Welcome Back!</h2>
+        <h2>Sign in</h2>
       </v-flex>
     </v-layout>
 

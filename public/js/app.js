@@ -2269,6 +2269,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "EntryAdd",
@@ -2305,7 +2306,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
     isLogged: "auth/isLogged",
     token: "auth/token",
-    error: "entry/error"
+    error: "entry/error",
+    cpage: "entry/current_page"
   })),
   destroyed: function destroyed() {
     this.$store.commit("entry/clearError");
@@ -2329,6 +2331,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this.loading = false;
         });
       }
+    },
+    backToEntries: function backToEntries() {
+      this.$router.push({
+        name: "entry-list-page",
+        params: {
+          page: this.cpage
+        }
+      });
     }
   }
 });
@@ -29310,6 +29320,19 @@ var render = function() {
                                     ),
                                     _vm._v("add\n              ")
                                   ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-btn",
+                                  {
+                                    attrs: {
+                                      block: "",
+                                      type: "button",
+                                      color: "success"
+                                    },
+                                    on: { click: _vm.backToEntries }
+                                  },
+                                  [_vm._v("back")]
                                 )
                               ],
                               1
@@ -29850,7 +29873,7 @@ var render = function() {
                 "offset-lg4": ""
               }
             },
-            [_c("h2", [_vm._v("Welcome Back!")])]
+            [_c("h2", [_vm._v("Sign in")])]
           )
         ],
         1
@@ -30085,7 +30108,7 @@ var render = function() {
                 "offset-lg4": ""
               }
             },
-            [_c("h2", [_vm._v("Get Started Here")])]
+            [_c("h2", [_vm._v("Sign up")])]
           )
         ],
         1

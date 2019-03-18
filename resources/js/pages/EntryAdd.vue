@@ -79,6 +79,7 @@
                     <v-icon light>fas fa-spinner</v-icon>
                   </span>add
                 </v-btn>
+                <v-btn block @click="backToEntries" type="button" color="success">back</v-btn>
               </v-flex>
             </v-layout>
           </v-form>
@@ -125,7 +126,8 @@ export default {
     ...mapGetters({
       isLogged: "auth/isLogged",
       token: "auth/token",
-      error: "entry/error"
+      error: "entry/error",
+      cpage: "entry/current_page"
     })
   },
   destroyed() {
@@ -153,6 +155,12 @@ export default {
             this.loading = false;
           });
       }
+    },
+    backToEntries() {
+      this.$router.push({
+        name: "entry-list-page",
+        params: { page: this.cpage }
+      });
     }
   }
 };

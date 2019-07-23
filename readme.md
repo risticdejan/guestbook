@@ -14,6 +14,10 @@ This is a mini web app and based on the guestbook. It was used to create the app
 -   `npm install` to download npm packages
 -   `npm run prod`
 
+## Look what it looks like
+
+![alt text](gbook.png)
+
 ## License
 
 The Laravel framework is open-source software licensed under the [MIT license](https://opensource.org/licenses/MIT).
